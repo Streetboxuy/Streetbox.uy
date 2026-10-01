@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>streetbox.uy | Detailing, Cuidado Automotriz y Accesorios en Uruguay</title>
+  <meta name="description" content="streetbox.uy - Productos de limpieza, detailing y accesorios para cuidar tu auto y moto en Uruguay. Vonixx, ceras, microfibras y más. Envíos a todo el país.">
+  <meta name="keywords" content="streetbox.uy, streetbox, detailing Uruguay, productos para lavar autos, limpieza de autos, Vonixx Uruguay, accesorios para auto, accesorios para moto">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Montserrat & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Montserrat', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#E85A10',
+              orangeHover: '#C64808',
+              orangeGlow: '#FF7A00',
+              dark: '#0A0B0E',
+              card: '#12141A',
+              border: '#262933',
+              grayText: '#9CA3AF'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0A0B0E;
+      color: #F3F4F6;
+    }
+    .carbon-bg {
+      background-color: #0d0f14;
+      background-image: radial-gradient(#262933 0.75px, transparent 0.75px), radial-gradient(#262933 0.75px, #0d0f14 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #12141A;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #262933;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #E85A10;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-orange selection:text-white carbon-bg">
+
+  <!-- ================= CONFIGURACIÓN CENTRALIZADA EN JS ================= -->
+  <script>
+    const STORE_CONFIG = {
+      name: "streetbox.uy",
+      subtitle: "Detailing & Auto / Moto Care",
+      phone: "59899123456", // Reemplazar por número real de WhatsApp sin el '+'
+      currency: "$ UYU",
+      freeShippingThreshold: 2500
+    };
+
+    const PRODUCTS_DATA = [
+      {
+        id: "vfloc",
+        name: "V-FLOC 1.5L",
+        brand: "Vonixx",
+        category: "exterior",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Lava autos neutro de alta concentración y alto rendimiento con pH neutro.",
+        inStock: true,
+        isFeatured: true
+      },
+      {
+        id: "sintra-fast",
+        name: "Sintra Fast 500ml",
+        brand: "Vonixx",
+        category: "interior",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Limpiador APC bactericida multiusos listo para usar. Elimina suciedad y malos olores.",
+        inStock: true,
+        isFeatured: true
+      },
+      {
+        id: "restaurax",
+        name: "Restaurax 500ml",
+        brand: "Vonixx",
+        category: "exterior",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Restaurador de plásticos externos e internos. Renueva y protege contra rayos UV.",
+        inStock: true,
+        isFeatured: true
+      },
+      {
+        id: "intense",
+        name: "Intense 500ml",
+        brand: "Vonixx",
+        category: "interior",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Renovador de plásticos internos con acabado mate de tacto seco y protección UV.",
+        inStock: true,
+        isFeatured: false
+      },
+      {
+        id: "shiny",
+        name: "Shiny 500ml",
+        brand: "Vonixx",
+        category: "llantas",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Acondicionador de cubiertas de altísima durabilidad y brillo intenso de larga duración.",
+        inStock: true,
+        isFeatured: true
+      },
+      {
+        id: "vmol",
+        name: "V-MOL 1.5L",
+        brand: "Vonixx",
+        category: "exterior",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Lava autos alcalino concentrado ideal para remover suciedades difíciles como barro.",
+        inStock: true,
+        isFeatured: false
+      },
+      {
+        id: "revox",
+        name: "Revox 500ml",
+        brand: "Vonixx",
+        category: "llantas",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Sellador sintético para neumáticos. Proporciona alto nivel de repelencia al agua.",
+        inStock: true,
+        isFeatured: false
+      },
+      {
+        id: "blend-cera",
+        name: "Blend Cera Pasta 100g",
+        brand: "Vonixx",
+        category: "ceras",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Cera híbrida de Carnaúba y SiO2. Brillo profundo y repelencia hidrofóbica.",
+        inStock: true,
+        isFeatured: true
+      },
+      {
+        id: "aplicadores",
+        name: "Pack Aplicadores de Espuma",
+        brand: "Accesorios",
+        category: "accesorios",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Aplicadores suaves de espuma ideales para ceras y acondicionadores.",
+        inStock: true,
+        isFeatured: false
+      },
+      {
+        id: "microfibras",
+        name: "Paño Microfibra 40x40 400GSM",
+        brand: "Accesorios",
+        category: "accesorios",
+        price: null,
+        priceText: "Precio a definir",
+        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0A?auto=format&fit=crop&q=80&w=600",
+        shortDesc: "Microfibra de alta densidad sin costuras. Absorción superior libre de rayones.",
+        inStock: true,
+        isFeatured: true
+      }
+    ];
+
+    const KITS_DATA = [
+      {
+        id: "kit-lavado",
+        name: "Kit Lavado Básico Streetbox",
+        productsIncluded: ["V-FLOC Shampoo 1.5L", "Guante Microfibra", "Toalla de Secado"],
+        kitPrice: null,
+        kitPriceText: "Consultar precio",
+        originalPriceText: "Combo Ahorro Auto",
+        savingText: "Top Ventas",
+        image: "https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&q=80&w=600"
+      },
+      {
+        id: "kit-interior",
+        name: "Kit Cuidado Interior Total",
+        productsIncluded: ["Sintra Fast 500ml", "Intense 500ml", "Microfibra Interior"],
+        kitPrice: null,
+        kitPriceText: "Consultar precio",
+        originalPriceText: "Pack Limpieza Profunda",
+        savingText: "Recomendado",
+        image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=600"
+      },
+      {
+        id: "kit-detailing",
+        name: "Kit Pro Detailing Exterior",
+        productsIncluded: ["Blend Cera", "Restaurax", "Shiny Cubiertas", "2x Aplicadores"],
+        kitPrice: null,
+        kitPriceText: "Consultar precio",
+        originalPriceText: "Línea Pro Vonixx",
+        savingText: "Súper Ahorro",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=600"
+      },
+      {
+        id: "kit-moto",
+        name: "Kit Cuidado Express Moto",
+        productsIncluded: ["Shampoo Concentrado", "Cera en Spray", "Microfibra Ultra Soft"],
+        kitPrice: null,
+        kitPriceText: "Consultar precio",
+        originalPriceText: "Uso diario para motos",
+        savingText: "Especial Motos",
+        image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=600"
+      }
+    ];
+  </script>
+
+  <!-- ================= HEADER / NAVBAR ================= -->
+  <header class="sticky top-0 z-40 bg-brand-dark/95 backdrop-blur-md border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo estilo streetbox.uy -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-neutral-700 via-neutral-900 to-black border-2 border-brand-orange flex items-center justify-center shadow-md shadow-brand-orange/20 group-hover:scale-105 transition-transform">
+            <!-- Escudo similar al logo -->
+            <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <div>
+            <span class="font-display text-2xl font-black tracking-tight text-white italic lowercase block leading-none">streetbox<span class="text-brand-orange">.uy</span></span>
+            <span class="text-[9px] font-bold text-brand-grayText uppercase tracking-widest block mt-1">Detailing • Auto & Moto</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+          <a href="#inicio" class="text-gray-300 hover:text-brand-orange transition-colors">Inicio</a>
+          <a href="#productos" class="text-gray-300 hover:text-brand-orange transition-colors">Productos</a>
+          <a href="#kits" class="text-gray-300 hover:text-brand-orange transition-colors">Kits</a>
+          <a href="#ofertas" class="text-gray-300 hover:text-brand-orange transition-colors">Ofertas</a>
+          <a href="#nosotros" class="text-gray-300 hover:text-brand-orange transition-colors">Nosotros</a>
+          <a href="#envios" class="text-gray-300 hover:text-brand-orange transition-colors">Envíos</a>
+        </nav>
+
+        <!-- Actions -->
+        <div class="flex items-center space-x-4">
+          <!-- Carrito -->
+          <button id="cartBtn" class="relative p-2.5 bg-brand-card hover:bg-brand-border text-white rounded-xl transition-all flex items-center gap-2 border border-brand-border">
+            <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            <span class="hidden sm:inline text-xs font-semibold">Carrito</span>
+            <span id="cartCount" class="bg-brand-orange text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+          </button>
+
+          <!-- WhatsApp Direct -->
+          <button onclick="openWhatsAppGeneral()" class="hidden sm:flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-emerald-950/40">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+            </svg>
+            <span>Comprar por WhatsApp</span>
+          </button>
+
+          <!-- Mobile menu button -->
+          <button id="mobileMenuBtn" class="md:hidden p-2 text-gray-400 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden bg-brand-card border-b border-brand-border px-4 pt-2 pb-6 space-y-3">
+      <a href="#inicio" class="block text-gray-300 hover:text-brand-orange font-medium py-1">Inicio</a>
+      <a href="#productos" class="block text-gray-300 hover:text-brand-orange font-medium py-1">Productos</a>
+      <a href="#kits" class="block text-gray-300 hover:text-brand-orange font-medium py-1">Kits</a>
+      <a href="#ofertas" class="block text-gray-300 hover:text-brand-orange font-medium py-1">Ofertas</a>
+      <a href="#nosotros" class="block text-gray-300 hover:text-brand-orange font-medium py-1">Nosotros</a>
+      <a href="#envios" class="block text-gray-300 hover:text-brand-orange font-medium py-1">Envíos</a>
+      <button onclick="openWhatsAppGeneral()" class="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm py-3 rounded-xl mt-4">
+        <span>Comprar por WhatsApp</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= HERO PRINCIPAL ================= -->
+  <section id="inicio" class="relative overflow-hidden py-16 md:py-28 border-b border-brand-border">
+    <!-- Glow Background Effects Naranja / Cobre -->
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-brand-orange/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 right-0 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-card border border-brand-border text-brand-orange text-xs font-bold uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
+            Envíos a todo Uruguay 🇺🇾
+          </div>
+          
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-white italic tracking-tight uppercase leading-none">
+            Todo lo que tu vehículo necesita para <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-amber-500 to-orange-400">lucir increíble.</span>
+          </h1>
+          
+          <p class="text-base sm:text-lg text-brand-grayText max-w-2xl mx-auto lg:mx-0 font-normal">
+            Productos de limpieza, detailing y accesorios para cuidar tu auto y moto en Uruguay como se merecen.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+            <a href="#productos" class="w-full sm:w-auto bg-brand-orange hover:bg-brand-orangeHover text-white font-bold text-sm px-8 py-4 rounded-xl transition-all shadow-lg shadow-brand-orange/20 text-center">
+              Ver Productos
+            </a>
+            <button onclick="openWhatsAppGeneral()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm px-8 py-4 rounded-xl transition-all shadow-lg shadow-emerald-950/30 flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+              </svg>
+              Comprar por WhatsApp
+            </button>
+          </div>
+
+          <!-- Auto / Moto badges -->
+          <div class="grid grid-cols-3 gap-4 pt-8 border-t border-brand-border/60 text-center lg:text-left">
+            <div>
+              <span class="block text-white font-bold text-lg sm:text-xl">🚗 Autos</span>
+              <span class="text-xs text-brand-grayText">Detailing integral</span>
+            </div>
+            <div>
+              <span class="block text-white font-bold text-lg sm:text-xl">🏍️ Motos</span>
+              <span class="text-xs text-brand-grayText">Limpieza & Protección</span>
+            </div>
+            <div>
+              <span class="block text-white font-bold text-lg sm:text-xl">🇺🇾 Uruguay</span>
+              <span class="text-xs text-brand-grayText">Envíos a todo el país</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="relative mx-auto max-w-md lg:max-w-none">
+            <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-brand-orange to-amber-600 opacity-40 blur-xl"></div>
+            <div class="relative rounded-2xl overflow-hidden border border-brand-border bg-brand-card">
+              <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&q=80&w=1000" alt="streetbox.uy detailing" class="w-full h-[380px] object-cover hover:scale-105 transition-transform duration-500">
+              <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-brand-dark via-brand-dark/90 to-transparent p-6">
+                <span class="text-xs font-bold text-brand-orange uppercase tracking-widest">Especialistas en Estética Automotriz</span>
+                <p class="text-white font-semibold text-base mt-1">Siente la diferencia en cada lavado con streetbox.uy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CATEGORÍAS ================= -->
+  <section class="py-16 bg-brand-dark/50 border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+        <div>
+          <h2 class="text-xs font-bold uppercase text-brand-orange tracking-widest">Explora por área</h2>
+          <p class="font-display text-2xl sm:text-3xl font-black text-white italic mt-1">Categorías de Productos</p>
+        </div>
+        <p class="text-sm text-brand-grayText mt-2 md:mt-0">Línea completa para autos y motos en Uruguay</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        
+        <button onclick="filterCategory('exterior')" class="group relative rounded-xl overflow-hidden border border-brand-border bg-brand-card p-4 text-left hover:border-brand-orange transition-all">
+          <div class="h-24 w-full rounded-lg bg-gray-900 mb-3 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          </div>
+          <h3 class="text-sm font-bold text-white group-hover:text-brand-orange transition-colors">Lavado Exterior</h3>
+          <span class="text-[11px] text-brand-grayText block mt-0.5">Shampoos neutros</span>
+        </button>
+
+        <button onclick="filterCategory('interior')" class="group relative rounded-xl overflow-hidden border border-brand-border bg-brand-card p-4 text-left hover:border-brand-orange transition-all">
+          <div class="h-24 w-full rounded-lg bg-gray-900 mb-3 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          </div>
+          <h3 class="text-sm font-bold text-white group-hover:text-brand-orange transition-colors">Interior</h3>
+          <span class="text-[11px] text-brand-grayText block mt-0.5">APC y plásticos</span>
+        </button>
+
+        <button onclick="filterCategory('llantas')" class="group relative rounded-xl overflow-hidden border border-brand-border bg-brand-card p-4 text-left hover:border-brand-orange transition-all">
+          <div class="h-24 w-full rounded-lg bg-gray-900 mb-3 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          </div>
+          <h3 class="text-sm font-bold text-white group-hover:text-brand-orange transition-colors">Llantas & Neumáticos</h3>
+          <span class="text-[11px] text-brand-grayText block mt-0.5">Brillo y acondicionador</span>
+        </button>
+
+        <button onclick="filterCategory('ceras')" class="group relative rounded-xl overflow-hidden border border-brand-border bg-brand-card p-4 text-left hover:border-brand-orange transition-all">
+          <div class="h-24 w-full rounded-lg bg-gray-900 mb-3 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          </div>
+          <h3 class="text-sm font-bold text-white group-hover:text-brand-orange transition-colors">Ceras & Protección</h3>
+          <span class="text-[11px] text-brand-grayText block mt-0.5">SiO2 y Carnaúba</span>
+        </button>
+
+        <button onclick="filterCategory('accesorios')" class="group relative rounded-xl overflow-hidden border border-brand-border bg-brand-card p-4 text-left hover:border-brand-orange transition-all">
+          <div class="h-24 w-full rounded-lg bg-gray-900 mb-3 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0A?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          </div>
+          <h3 class="text-sm font-bold text-white group-hover:text-brand-orange transition-colors">Microfibras</h3>
+          <span class="text-[11px] text-brand-grayText block mt-0.5">Paños y aplicadores</span>
+        </button>
+
+        <button onclick="filterCategory('moto')" class="group relative rounded-xl overflow-hidden border border-brand-border bg-brand-card p-4 text-left hover:border-brand-orange transition-all">
+          <div class="h-24 w-full rounded-lg bg-gray-900 mb-3 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+          </div>
+          <h3 class="text-sm font-bold text-white group-hover:text-brand-orange transition-colors">Productos Moto</h3>
+          <span class="text-[11px] text-brand-grayText block mt-0.5">Accesorios & cuidado</span>
+        </button>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCTOS CATÁLOGO ================= -->
+  <section id="productos" class="py-16 bg-brand-dark border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 class="text-xs font-bold uppercase text-brand-orange tracking-widest">Catálogo Disponible</h2>
+          <p class="font-display text-2xl sm:text-3xl font-black text-white italic mt-1">Nuestros Productos</p>
+        </div>
+
+        <!-- Búsqueda y Filtros -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div class="relative">
+            <input id="searchInput" type="text" placeholder="Buscar por nombre o marca..." class="w-full sm:w-64 bg-brand-card border border-brand-border rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-orange">
+            <svg class="w-4 h-4 text-gray-500 absolute right-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+
+          <select id="categorySelect" class="bg-brand-card border border-brand-border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-orange">
+            <option value="all">Todas las categorías</option>
+            <option value="exterior">Lavado Exterior</option>
+            <option value="interior">Interior</option>
+            <option value="llantas">Llantas & Neumáticos</option>
+            <option value="ceras">Ceras & Protección</option>
+            <option value="accesorios">Microfibras & Accesorios</option>
+            <option value="moto">Motos</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Grid de Productos -->
+      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Render dinámico -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= KITS DESTACADOS ================= -->
+  <section id="kits" class="py-16 bg-brand-dark/60 border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase text-brand-orange tracking-widest">Ahorrá Comprando en Pack</span>
+        <h2 class="font-display text-3xl font-black text-white italic mt-1">Kits de Cuidado Especiales</h2>
+        <p class="text-sm text-brand-grayText mt-2">Combinaciones armadas por expertos para lograr un acabado profesional al mejor costo.</p>
+      </div>
+
+      <div id="kitsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Render dinámico -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECCIÓN OFERTAS & PROMOCIONES ================= -->
+  <section id="ofertas" class="py-16 bg-brand-dark border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-r from-brand-card via-brand-dark to-brand-card rounded-3xl border border-brand-border p-8 md:p-12 relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-brand-orange/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="max-w-3xl">
+          <span class="bg-brand-orange text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-md">Promociones Activas</span>
+          <h2 class="font-display text-2xl sm:text-4xl font-black text-white italic mt-4 uppercase tracking-tight">Beneficios Especiales en streetbox.uy</h2>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
+            <div class="bg-brand-dark/80 p-5 rounded-2xl border border-brand-border">
+              <div class="text-brand-orange font-black text-xl mb-1">Envío Gratis</div>
+              <p class="text-xs text-gray-300">En compras superiores a un monto mínimo configurable.</p>
+            </div>
+            <div class="bg-brand-dark/80 p-5 rounded-2xl border border-brand-border">
+              <div class="text-brand-orange font-black text-xl mb-1">Combos Auto/Moto</div>
+              <p class="text-xs text-gray-300">Descuentos llevando 2 o más productos complementarios.</p>
+            </div>
+            <div class="bg-brand-dark/80 p-5 rounded-2xl border border-brand-border">
+              <div class="text-brand-orange font-black text-xl mb-1">Asesoría Directa</div>
+              <p class="text-xs text-gray-300">Te aconsejamos exacto qué producto usar según tu vehículo.</p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-4 items-center">
+            <button onclick="openWhatsAppGeneral('Hola, quiero consultar por las ofertas y promociones vigentes en streetbox.uy.')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm px-6 py-3 rounded-xl transition-all flex items-center gap-2">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+              Consultar Promos por WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOBRE NOSOTROS ================= -->
+  <section id="nosotros" class="py-16 bg-brand-dark/40 border-b border-brand-border">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-xs font-bold uppercase text-brand-orange tracking-widest">Emprendimiento Nacional</span>
+      <h2 class="font-display text-3xl font-black text-white italic mt-1">Sobre streetbox.uy</h2>
+      <p class="text-gray-300 text-base leading-relaxed mt-4 max-w-3xl mx-auto">
+        Somos un emprendimiento uruguayo apasionado por el mundo del motor. Nocemos con el objetivo de brindar productos, insumos y accesorios de detailing seleccionados para que cualquier persona en Uruguay pueda mantener su auto o moto impecables y protegidos con resultados profesionales.
+      </p>
+      <div class="mt-8 inline-flex items-center gap-3 bg-brand-card border border-brand-border px-5 py-3 rounded-2xl">
+        <span class="text-xl">🇺🇾</span>
+        <span class="text-xs text-gray-300 font-medium">Atención cercana, rápida y adaptada a lo que buscas en Uruguay.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ENVÍOS ================= -->
+  <section id="envios" class="py-16 bg-brand-dark border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="bg-brand-card p-6 rounded-2xl border border-brand-border">
+          <div class="w-10 h-10 bg-brand-orange/10 text-brand-orange rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-white">Envíos a todo Uruguay 🇺🇾</h3>
+          <p class="text-xs text-brand-grayText mt-2 leading-relaxed">
+            Despachamos tu pedido por agencia de preferencia (DAC, Mirtrans, De Punta, Tres Cruces) hacia cualquier departamento.
+          </p>
+        </div>
+
+        <div class="bg-brand-card p-6 rounded-2xl border border-brand-border">
+          <div class="w-10 h-10 bg-brand-orange/10 text-brand-orange rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-white">Tiempos & Costos</h3>
+          <p class="text-xs text-brand-grayText mt-2 leading-relaxed">
+            Los costos varían según agencia y localidad. Los tiempos habituales de entrega son de 24 a 48 horas hábiles.
+          </p>
+        </div>
+
+        <div class="bg-brand-card p-6 rounded-2xl border border-brand-border">
+          <div class="w-10 h-10 bg-brand-orange/10 text-brand-orange rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-white">Formas de Pago</h3>
+          <p class="text-xs text-brand-grayText mt-2 leading-relaxed">
+            Coordinamos la compra fácilmente por WhatsApp. Transferencias bancarias, Prex, MiDinero o Mercado Pago.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-black py-12 border-t border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <span class="font-display text-2xl font-black text-white italic lowercase">streetbox<span class="text-brand-orange">.uy</span></span>
+          <p class="text-xs text-brand-grayText mt-1">Productos de detailing, cuidado automotriz y accesorios para auto y moto en Uruguay.</p>
+        </div>
+        <div class="flex space-x-6 text-xs text-brand-grayText">
+          <a href="#inicio" class="hover:text-white transition-colors">Inicio</a>
+          <a href="#productos" class="hover:text-white transition-colors">Productos</a>
+          <a href="#kits" class="hover:text-white transition-colors">Kits</a>
+          <a href="#nosotros" class="hover:text-white transition-colors">Nosotros</a>
+        </div>
+      </div>
+      <div class="border-t border-brand-border/40 mt-8 pt-8 text-center text-xs text-gray-600">
+        &copy; <script>document.write(new Date().getFullYear())</script> streetbox.uy. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= CARRITO DESLIZABLE ================= -->
+  <div id="cartModal" class="fixed inset-0 z-50 overflow-hidden hidden">
+    <div id="cartBackdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity"></div>
+
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div class="w-screen max-w-md bg-brand-card border-l border-brand-border flex flex-col justify-between shadow-2xl">
+        
+        <div class="p-6 border-b border-brand-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            <h2 class="text-lg font-extrabold text-white">Tu Carrito de Compras</h2>
+          </div>
+          <button id="closeCartBtn" class="p-2 text-gray-400 hover:text-white rounded-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div id="cartItemsContainer" class="p-6 overflow-y-auto space-y-4 flex-1 custom-scrollbar">
+          <!-- Render dinámico -->
+        </div>
+
+        <div class="p-6 border-t border-brand-border bg-brand-dark/90 space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-brand-grayText mb-1">Departamento de Envío (Uruguay):</label>
+            <select id="cartDept" class="w-full bg-brand-card border border-brand-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-orange">
+              <option value="Montevideo">Montevideo</option>
+              <option value="Canelones">Canelones</option>
+              <option value="Maldonado">Maldonado</option>
+              <option value="Rocha">Rocha</option>
+              <option value="Colonia">Colonia</option>
+              <option value="San José">San José</option>
+              <option value="Salto">Salto</option>
+              <option value="Paysandú">Paysandú</option>
+              <option value="Rivera">Rivera</option>
+              <option value="Tacuarembó">Tacuarembó</option>
+              <option value="Otro">Otro Departamento</option>
+            </select>
+          </div>
+
+          <div class="flex justify-between items-center text-sm font-bold pt-2 border-t border-brand-border/60">
+            <span class="text-gray-300">Total Estimado:</span>
+            <span id="cartTotalText" class="text-xl text-brand-orange font-black">$ 0</span>
+          </div>
+
+          <div class="space-y-2">
+            <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3.5 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+              Finalizar Pedido por WhatsApp
+            </button>
+            <button onclick="clearCart()" class="w-full text-xs text-brand-grayText hover:text-red-400 py-1 transition-colors">
+              Vaciar Carrito
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+  <button onclick="openWhatsAppGeneral()" class="fixed bottom-6 right-6 z-40 bg-emerald-600 hover:bg-emerald-500 text-white p-3.5 rounded-full shadow-2xl transition-all hover:scale-110 flex items-center justify-center border-2 border-emerald-400" title="Contactar por WhatsApp">
+    <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+  </button>
+
+  <!-- ================= LÓGICA JAVASCRIPT ================= -->
+  <script>
+    let cart = [];
+
+    const productsGrid = document.getElementById('productsGrid');
+    const kitsGrid = document.getElementById('kitsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const categorySelect = document.getElementById('categorySelect');
+    const cartBtn = document.getElementById('cartBtn');
+    const cartCount = document.getElementById('cartCount');
+    const cartModal = document.getElementById('cartModal');
+    const cartBackdrop = document.getElementById('cartBackdrop');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const cartTotalText = document.getElementById('cartTotalText');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts(PRODUCTS_DATA);
+      renderKits(KITS_DATA);
+      updateCartUI();
+
+      searchInput.addEventListener('input', filterProducts);
+      categorySelect.addEventListener('change', filterProducts);
+      cartBtn.addEventListener('click', toggleCartModal);
+      closeCartBtn.addEventListener('click', toggleCartModal);
+      cartBackdrop.addEventListener('click', toggleCartModal);
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    });
+
+    function renderProducts(products) {
+      productsGrid.innerHTML = '';
+
+      if (products.length === 0) {
+        productsGrid.innerHTML = `
+          <div class="col-span-full text-center py-12 text-brand-grayText">
+            <p class="text-base">No se encontraron productos que coincidan con la búsqueda.</p>
+          </div>
+        `;
+        return;
+      }
+
+      products.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col justify-between hover:border-brand-orange/50 transition-all group';
+
+        const displayPrice = p.price !== null ? `${STORE_CONFIG.currency} ${p.price}` : p.priceText;
+
+        card.innerHTML = `
+          <div>
+            <div class="relative h-48 rounded-xl overflow-hidden bg-gray-900 mb-4">
+              <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <span class="absolute top-2 left-2 bg-brand-dark/90 backdrop-blur-md text-brand-grayText text-[10px] font-bold uppercase px-2.5 py-1 rounded-md border border-brand-border">${p.brand}</span>
+              ${p.isFeatured ? '<span class="absolute top-2 right-2 bg-brand-orange text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded">Destacado</span>' : ''}
+            </div>
+            
+            <h3 class="text-base font-bold text-white group-hover:text-brand-orange transition-colors">${p.name}</h3>
+            <p class="text-xs text-brand-grayText mt-1 line-clamp-2">${p.shortDesc}</p>
+          </div>
+
+          <div class="mt-5 pt-4 border-t border-brand-border/60">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs text-brand-grayText">Precio:</span>
+              <span class="text-lg font-black text-white">${displayPrice}</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="addToCart('${p.id}')" class="bg-brand-dark hover:bg-brand-border border border-brand-border text-white text-xs font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Carrito
+              </button>
+              <button onclick="consultWhatsAppProduct('${p.name}')" class="bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-600/30 text-xs font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-1">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                Consultar
+              </button>
+            </div>
+          </div>
+        `;
+        productsGrid.appendChild(card);
+      });
+    }
+
+    function renderKits(kits) {
+      kitsGrid.innerHTML = '';
+      kits.forEach(k => {
+        const card = document.createElement('div');
+        card.className = 'bg-brand-card rounded-2xl border border-brand-border p-5 flex flex-col justify-between hover:border-brand-orange/40 transition-all';
+
+        const includedList = k.productsIncluded.map(item => `<li class="flex items-center gap-1.5"><span class="text-brand-orange">•</span> ${item}</li>`).join('');
+        const displayPrice = k.kitPrice !== null ? `${STORE_CONFIG.currency} ${k.kitPrice}` : k.kitPriceText;
+
+        card.innerHTML = `
+          <div>
+            <div class="h-36 rounded-xl overflow-hidden bg-gray-900 mb-4 relative">
+              <img src="${k.image}" alt="${k.name}" class="w-full h-full object-cover">
+              <span class="absolute bottom-2 left-2 bg-brand-orange text-white text-[10px] font-bold px-2 py-0.5 rounded">${k.savingText}</span>
+            </div>
+            <h3 class="text-base font-bold text-white">${k.name}</h3>
+            
+            <ul class="text-xs text-brand-grayText mt-3 space-y-1">
+              ${includedList}
+            </ul>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-brand-border/60">
+            <div class="flex items-baseline justify-between mb-4">
+              <span class="text-xs text-brand-grayText">${k.originalPriceText}</span>
+              <span class="text-lg font-black text-brand-orange">${displayPrice}</span>
+            </div>
+
+            <button onclick="consultWhatsAppProduct('${k.name}')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+              Comprar Kit por WhatsApp
+            </button>
+          </div>
+        `;
+        kitsGrid.appendChild(card);
+      });
+    }
+
+    function filterProducts() {
+      const term = searchInput.value.toLowerCase().trim();
+      const cat = categorySelect.value;
+
+      const filtered = PRODUCTS_DATA.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(term) || p.brand.toLowerCase().includes(term) || p.shortDesc.toLowerCase().includes(term);
+        const matchesCat = cat === 'all' || p.category === cat;
+        return matchesSearch && matchesCat;
+      });
+
+      renderProducts(filtered);
+    }
+
+    function filterCategory(catName) {
+      categorySelect.value = catName;
+      filterProducts();
+      document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function addToCart(productId) {
+      const product = PRODUCTS_DATA.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+
+      updateCartUI();
+      toggleCartModal(true);
+    }
+
+    function updateQuantity(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.id !== productId);
+      }
+      updateCartUI();
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(i => i.id !== productId);
+      updateCartUI();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalCount;
+
+      cartItemsContainer.innerHTML = '';
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `
+          <div class="text-center py-12 text-brand-grayText">
+            <svg class="w-12 h-12 mx-auto text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            <p class="text-sm">Tu carrito está vacío.</p>
+            <button onclick="toggleCartModal(false)" class="text-xs text-brand-orange font-bold mt-2 underline">Explorar catálogo</button>
+          </div>
+        `;
+        cartTotalText.textContent = "$ 0";
+        return;
+      }
+
+      let totalCalculated = 0;
+      let hasCustomPrice = false;
+
+      cart.forEach(item => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'bg-brand-dark p-3.5 rounded-xl border border-brand-border flex items-center justify-between gap-3';
+
+        if (item.price !== null) {
+          totalCalculated += item.price * item.quantity;
+        } else {
+          hasCustomPrice = true;
+        }
+
+        const priceDisplay = item.price !== null ? `${STORE_CONFIG.currency} ${item.price * item.quantity}` : 'A definir';
+
+        itemEl.innerHTML = `
+          <div class="flex items-center gap-3 min-w-0">
+            <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-lg object-cover bg-gray-900 shrink-0">
+            <div class="min-w-0">
+              <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
+              <span class="text-[11px] text-brand-grayText block mt-0.5">${priceDisplay}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center bg-brand-card border border-brand-border rounded-lg">
+              <button onclick="updateQuantity('${item.id}', -1)" class="px-2 py-1 text-xs text-gray-400 hover:text-white">-</button>
+              <span class="px-2 text-xs font-bold text-white">${item.quantity}</span>
+              <button onclick="updateQuantity('${item.id}', 1)" class="px-2 py-1 text-xs text-gray-400 hover:text-white">+</button>
+            </div>
+            <button onclick="removeFromCart('${item.id}')" class="text-gray-500 hover:text-red-400 p-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(itemEl);
+      });
+
+      if (hasCustomPrice && totalCalculated === 0) {
+        cartTotalText.textContent = "A cotizar por WhatsApp";
+      } else if (hasCustomPrice) {
+        cartTotalText.textContent = `${STORE_CONFIG.currency} ${totalCalculated} (+ cotización)`;
+      } else {
+        cartTotalText.textContent = `${STORE_CONFIG.currency} ${totalCalculated}`;
+      }
+    }
+
+    function toggleCartModal(show) {
+      if (typeof show === 'boolean') {
+        if (show) {
+          cartModal.classList.remove('hidden');
+          setTimeout(() => cartBackdrop.classList.remove('opacity-0'), 10);
+        } else {
+          cartBackdrop.classList.add('opacity-0');
+          setTimeout(() => cartModal.classList.add('hidden'), 200);
+        }
+      } else {
+        const isHidden = cartModal.classList.contains('hidden');
+        toggleCartModal(isHidden);
+      }
+    }
+
+    function openWhatsAppGeneral(customMessage) {
+      const msg = customMessage || `Hola ${STORE_CONFIG.name}, quiero hacer una consulta sobre sus productos.`;
+      const url = `https://wa.me/${STORE_CONFIG.phone}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    function consultWhatsAppProduct(productName) {
+      const msg = `Hola ${STORE_CONFIG.name}, quiero consultar por el producto "${productName}".`;
+      const url = `https://wa.me/${STORE_CONFIG.phone}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    function checkoutWhatsApp() {
+      if (cart.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+      }
+
+      const dept = document.getElementById('cartDept').value;
+      let text = `*NUEVO PEDIDO DESDE LA WEB - ${STORE_CONFIG.name}*\n`;
+      text += `📍 *Departamento de envío:* ${dept}\n\n`;
+      text += `*Productos seleccionados:*\n`;
+
+      cart.forEach((item, index) => {
+        const priceStr = item.price !== null ? `${STORE_CONFIG.currency} ${item.price * item.quantity}` : 'A cotizar';
+        text += `${index + 1}. ${item.name} (x${item.quantity}) - ${priceStr}\n`;
+      });
+
+      text += `\n*Total estimado:* ${cartTotalText.textContent}\n\n`;
+      text += `Quedo a la espera para coordinar pago y envío. ¡Gracias!`;
+
+      const url = `https://wa.me/${STORE_CONFIG.phone}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
